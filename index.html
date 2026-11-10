@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Recorrido interactivo en 3D por la música afroperuana, el festejo y la cultura de Chincha, Ica, Perú.">
+<meta property="og:title" content="El cajón peruano de Chincha — Modelo 3D"><meta property="og:description" content="Recorrido interactivo en 3D por la música afroperuana, el festejo y la cultura de Chincha."><meta property="og:type" content="website"><meta name="theme-color" content="#1c120d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🥁%3C/text%3E%3C/svg%3E">
+<title>Cajón peruano de Chincha — Modelo 3D</title>
+<style>
+:root{
+  color-scheme:dark;
+  --ink:#f7ead8;--muted:#c9b29a;--gold:#e7b96e;--gold-soft:#f2d29b;
+  --line:rgba(225,179,113,.24);--panel:#241810;--panel-2:#2e1d13;
+  --rust:#9d4a2b;--cream:#f5e4c9;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(ellipse at 50% -12%,rgba(174,93,49,.32),transparent 48%),
+    radial-gradient(ellipse at 8% 55%,rgba(101,52,31,.18),transparent 35%),
+    linear-gradient(180deg,#1c120d 0%,#120d0a 56%,#0d0907 100%);
+  min-height:100vh;
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.11;background-image:linear-gradient(rgba(235,192,132,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(235,192,132,.12) 1px,transparent 1px);background-size:52px 52px;mask-image:linear-gradient(to bottom,black,transparent 72%)}
+.site-header{position:relative;padding:48px 22px 30px;overflow:hidden}
+.hero{width:min(1160px,100%);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:30px}
+.hero-copy{max-width:790px;position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--gold);font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+.eyebrow-mark{display:inline-block;width:28px;height:1px;background:var(--gold)}
+h1{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:clamp(2.5rem,5vw,4.7rem);line-height:1.02;letter-spacing:-.045em;margin:18px 0 14px;color:#fff2df}
+h1 span{display:block;color:var(--gold-soft);font-style:italic}
+.hero-copy>p{max-width:680px;color:#d0bca4;font-size:1.02rem;line-height:1.75;margin:0}
+.hero-meta{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin-top:22px}
+.hero-meta span{border:1px solid var(--line);border-radius:99px;padding:8px 12px;color:#e8d2b4;background:rgba(51,32,21,.48);font-size:.76rem;letter-spacing:.04em}
+.hero-seal{width:156px;height:156px;flex:0 0 156px;border:1px solid rgba(231,185,110,.42);border-radius:50%;display:grid;place-items:center;position:relative;color:var(--gold);transform:rotate(9deg);background:radial-gradient(circle,rgba(151,75,42,.18),rgba(20,13,9,.12) 68%)}
+.hero-seal:before,.hero-seal:after{content:"";position:absolute;border:1px solid rgba(231,185,110,.25);border-radius:50%;inset:10px}
+.hero-seal:after{inset:19px;border-style:dashed;opacity:.6}
+.seal-inner{text-align:center;z-index:1;transform:rotate(-9deg);font-family:Georgia,serif}
+.seal-inner strong{display:block;font-size:1.5rem;font-weight:500;letter-spacing:.08em}
+.seal-inner small{display:block;font:700 .57rem system-ui,sans-serif;letter-spacing:.2em;margin-top:5px}
+.header-line{width:min(1160px,100%);height:1px;margin:36px auto 0;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+main{width:min(1160px,calc(100% - 36px));margin:0 auto 52px;position:relative}
+.section-intro{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:0 0 18px}
+.section-kicker{color:var(--gold);font-size:.68rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;margin:0 0 8px}
+.section-intro h2{font:500 clamp(1.5rem,3vw,2.15rem)/1.15 Georgia,serif;margin:0;color:#f7ead8}
+.section-intro p{color:var(--muted);max-width:420px;line-height:1.6;font-size:.88rem;margin:0 0 2px}
+.stage{position:relative;border:1px solid rgba(210,155,94,.36);border-radius:22px;overflow:hidden;background:#1a110c;box-shadow:0 28px 90px rgba(0,0,0,.45),0 1px 0 rgba(255,235,206,.06) inset}
+.stage-topbar{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid rgba(224,180,119,.17);background:linear-gradient(90deg,#2c1c13,#21150f)}
+.stage-label{display:flex;align-items:center;gap:10px;color:#e8d5bb;font-size:.71rem;font-weight:800;letter-spacing:.15em}
+.stage-dot{width:7px;height:7px;border-radius:50%;background:#e6b66e;box-shadow:0 0 12px rgba(230,182,110,.85)}
+.stage-status{color:#b99e7b;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase}
+.scene-wrap{position:relative;background:linear-gradient(180deg,#9a6040 0%,#75432e 100%)}
+canvas{display:block;width:100%;height:clamp(400px,66vh,680px);min-height:380px;touch-action:none;outline:none}
+.hint{position:absolute;left:18px;bottom:16px;max-width:calc(100% - 36px);padding:9px 13px;border:1px solid rgba(244,220,185,.25);border-radius:99px;background:rgba(25,16,11,.78);backdrop-filter:blur(8px);color:#f3dfc1;font-size:.75rem;letter-spacing:.01em;pointer-events:none}
+.controls{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:15px 18px;background:linear-gradient(180deg,#241810,#1c120d)}
+.controls-label{color:#aa9073;font-size:.67rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.control-buttons{display:flex;gap:8px;flex-wrap:wrap}
+button{appearance:none;cursor:pointer;border:1px solid rgba(221,174,111,.38);border-radius:999px;background:#382419;color:#f7e8d1;padding:10px 16px;font:650 .8rem system-ui,sans-serif;transition:background .18s,border-color .18s,transform .18s;}
+button:hover{background:#5b3823;border-color:rgba(237,193,129,.8);transform:translateY(-1px)}
+button:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
+button#reset{background:linear-gradient(135deg,#b16a3d,#8e4628);border-color:#d69b5d;color:#fff4e2}
+button[aria-pressed="true"]{background:#7a4a2a;border-color:#f0cd94}
+.stage.is-full{display:flex;flex-direction:column;border-radius:0;border:0;background:#1a110c}
+.stage.is-full .scene-wrap{flex:1;min-height:0}
+.stage.is-full canvas{position:absolute;inset:0;width:100%;height:100%;min-height:0}
+.stage.is-full .controls,.stage.is-full .stage-topbar{flex:none}
+.stage.is-fixed{position:fixed;inset:0;z-index:100;width:100%;height:100vh;height:100dvh}
+.label-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;display:none}
+.chip{position:absolute;left:0;top:0;padding:4px 9px;border-radius:99px;border:1px solid rgba(244,220,185,.38);background:rgba(25,16,11,.84);color:#fff2df;font:700 .68rem system-ui,sans-serif;letter-spacing:.02em;white-space:nowrap}
+.tip{position:absolute;display:none;pointer-events:none;padding:5px 10px;border-radius:99px;background:rgba(25,16,11,.9);border:1px solid rgba(244,220,185,.35);color:#fff2df;font:700 .72rem system-ui,sans-serif;z-index:2}
+.card{position:absolute;right:16px;top:16px;width:min(300px,calc(100% - 32px));padding:16px 40px 16px 18px;border:1px solid rgba(244,220,185,.3);border-radius:16px;background:rgba(25,16,11,.92);backdrop-filter:blur(8px);box-shadow:0 14px 40px rgba(0,0,0,.4)}
+.card[hidden]{display:none}
+.card strong{display:block;font:500 1.12rem Georgia,serif;color:#f0d1a0;margin-bottom:6px}
+.card p{margin:0;color:#d8c4aa;font-size:.84rem;line-height:1.6}
+.card-close{position:absolute;right:8px;top:8px;width:30px;height:30px;padding:0;border-radius:50%;font-size:1.1rem;line-height:1}
+.info-heading{margin:54px 0 18px;display:flex;align-items:end;justify-content:space-between;gap:16px}
+.info-heading h2{font:500 clamp(1.6rem,3vw,2.2rem) Georgia,serif;margin:0}
+.info-heading p{color:#bfa98f;font-size:.82rem;margin:0;line-height:1.5}
+.info{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.info article{position:relative;min-height:188px;padding:23px 22px 21px;border:1px solid rgba(219,170,109,.23);border-radius:17px;background:linear-gradient(145deg,rgba(53,34,23,.92),rgba(28,18,12,.96));box-shadow:0 12px 30px rgba(0,0,0,.18);overflow:hidden}
+.info article:after{content:"";position:absolute;width:120px;height:120px;border:1px solid rgba(226,174,107,.12);border-radius:50%;right:-44px;bottom:-62px;box-shadow:0 0 0 12px rgba(226,174,107,.025),0 0 0 25px rgba(226,174,107,.02)}
+.card-number{display:block;color:#bd8955;font:italic 1.05rem Georgia,serif;margin-bottom:17px}
+.info h3{font:500 1.2rem Georgia,serif;color:#f0d1a0;margin:0 0 9px}
+.info p{position:relative;z-index:1;color:#cbb69d;font-size:.88rem;line-height:1.7;margin:0;max-width:34ch}
+.closing-note{margin-top:24px;padding:19px 22px;border-left:2px solid #b87948;background:linear-gradient(90deg,rgba(123,67,39,.2),transparent);color:#cdb99f;font:italic 1rem/1.65 Georgia,serif}
+footer{width:min(1160px,calc(100% - 36px));margin:0 auto;border-top:1px solid rgba(225,179,113,.16);padding:22px 0 30px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#957e65;font-size:.74rem;letter-spacing:.04em}
+@media(max-width:760px){.site-header{padding:36px 20px 24px}.hero-seal{width:112px;height:112px;flex-basis:112px}.seal-inner strong{font-size:1.15rem}.seal-inner small{font-size:.48rem}.info{grid-template-columns:1fr}.info article{min-height:0}.section-intro,.info-heading{align-items:start;flex-direction:column}.section-intro p{max-width:620px}.stage{border-radius:16px}canvas{height:58vh;min-height:360px}.header-line{margin-top:26px}}
+@media(max-width:520px){.hero{display:block}.hero-seal{display:none}h1{font-size:2.65rem}.hero-copy>p{font-size:.93rem}.hero-meta span{font-size:.68rem}.stage-topbar{padding:0 13px}.stage-status{font-size:.61rem}.controls{align-items:flex-start;flex-direction:column;padding:14px}.control-buttons{width:100%}.control-buttons button{flex:1;padding:10px 11px;font-size:.73rem}.hint{left:10px;bottom:10px;font-size:.68rem;padding:8px 10px}.info-heading{margin-top:42px}}
+[id]{scroll-margin-top:76px}
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px max(22px,calc((100% - 1160px)/2));background:rgba(18,13,10,.76);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(225,179,113,.14)}
+.brand{font:500 1.05rem Georgia,serif;color:var(--gold-soft);text-decoration:none;letter-spacing:.04em}
+.topnav div{display:flex;gap:6px}
+.topnav div a{color:#d9c5ab;text-decoration:none;font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;padding:7px 12px;border-radius:99px;transition:background .18s,color .18s}
+.topnav div a:hover{background:rgba(231,185,110,.14);color:#fff2df}
+a:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;text-decoration:none;border-radius:999px;padding:12px 22px;font:650 .85rem system-ui,sans-serif;border:1px solid rgba(221,174,111,.45);color:#f7e8d1;transition:background .18s,transform .18s,border-color .18s}
+.btn:hover{transform:translateY(-1px);background:#5b3823;border-color:rgba(237,193,129,.8)}
+.btn.primary{background:linear-gradient(135deg,#b16a3d,#8e4628);border-color:#d69b5d;color:#fff4e2}
+.btn.primary:hover{background:linear-gradient(135deg,#c27a4a,#9c5030)}
+.howto{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.howto div{padding:14px 16px;border:1px solid rgba(219,170,109,.2);border-radius:14px;background:rgba(40,26,17,.6)}
+.howto b{display:block;color:var(--gold);font:italic 1rem Georgia,serif;margin-bottom:4px;font-weight:400}
+.howto span{color:#cbb69d;font-size:.82rem;line-height:1.5}
+.group{margin-top:34px}
+.group-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.group-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:radial-gradient(circle,rgba(151,75,42,.3),rgba(20,13,9,.2));font-size:1.3rem;flex:none}
+.group-head h3{font:500 1.35rem Georgia,serif;margin:0;color:#f0d1a0}
+.group-head p{margin:3px 0 0;color:#bfa98f;font-size:.84rem;line-height:1.5}
+.elements{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.el{display:flex;flex-direction:column;padding:20px 20px 18px;border:1px solid rgba(219,170,109,.23);border-radius:16px;background:linear-gradient(145deg,rgba(53,34,23,.92),rgba(28,18,12,.96));transition:transform .2s,border-color .2s}
+.el:hover{transform:translateY(-3px);border-color:rgba(237,193,129,.5)}
+.el-kind{color:#bd8955;font:800 .62rem system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px}
+.el h4{font:500 1.12rem Georgia,serif;color:#f0d1a0;margin:0 0 8px}
+.el p{color:#cbb69d;font-size:.86rem;line-height:1.7;margin:0 0 16px;flex:1}
+.locate{align-self:flex-start;padding:8px 14px;font-size:.74rem}
+.reveal{opacity:0}
+.reveal.in{opacity:1;animation:rise .6s ease backwards}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+footer a{color:#b99e7b}
+@media(max-width:760px){.topnav div a{padding:6px 9px;font-size:.68rem}.howto{grid-template-columns:1fr}.elements{grid-template-columns:1fr}.group-head{align-items:flex-start}}
+@media(max-width:420px){.topnav div a:nth-child(3){display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}button{transition:none}}
+</style>
+</head>
+<body>
+<nav class="topnav" aria-label="Principal"><a class="brand" href="#top">Chincha 3D</a><div><a href="#escena">Escena</a><a href="#elementos">Elementos</a><a href="#cultura">Cultura</a></div></nav>
+<header class="site-header" id="top">
+  <div class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="eyebrow-mark"></span> Patrimonio cultural · Ica, Perú</div>
+      <h1>El cajón peruano <span>de Chincha</span></h1>
+      <p>Un recorrido interactivo por la música afroperuana, el festejo y las expresiones culturales que dan identidad a Chincha.</p>
+      <div class="hero-meta"><span>Modelo 3D interactivo</span><span>Cultura afroperuana</span><span>Chincha · Ica</span></div>
+      <div class="cta"><a class="btn primary" href="#escena">Explorar el cajón</a><a class="btn" href="#elementos">Conocer los elementos</a></div>
+    </div>
+    <div class="hero-seal" aria-hidden="true"><div class="seal-inner"><strong>CHINCHA</strong><small>ICA · PERÚ</small></div></div>
+  </div>
+  <div class="header-line"></div>
+</header>
+<main>
+  <section class="explore" id="escena" aria-labelledby="explore-title">
+    <div class="section-intro">
+      <div><p class="section-kicker">Explora la tradición</p><h2 id="explore-title">Una mirada desde todos sus ángulos</h2></div>
+      <p>Gira la escena, acércate a los detalles y descubre los elementos que representan la cultura chinchana.</p>
+    </div>
+    <section class="stage" aria-label="Modelo 3D interactivo del cajón peruano">
+      <div class="stage-topbar"><div class="stage-label"><span class="stage-dot"></span> ESCENA EN 3D</div><span class="stage-status">Escena interactiva</span></div>
+      <div class="scene-wrap">
+        <canvas id="scene" aria-label="Cajón peruano de Chincha en un escenario festivo 3D"></canvas>
+        <div class="label-layer" id="labelLayer" aria-hidden="true"></div>
+        <div class="tip" id="tip" aria-hidden="true"></div>
+        <aside class="card" id="card" hidden aria-live="polite"><button type="button" class="card-close" aria-label="Cerrar">×</button><strong id="cardName"></strong><p id="cardDesc"></p></aside>
+        <div class="hint">Arrastra para girar · Rueda para acercar · Toca un objeto para conocerlo</div>
+      </div>
+      <div class="controls">
+        <span class="controls-label">Cambiar perspectiva</span>
+        <div class="control-buttons"><button id="front" type="button">Vista frontal</button><button id="inside" type="button">Vista interior</button><button id="reset" type="button">Vista inicial</button><button id="toggleLabels" type="button" aria-pressed="false">Ver nombres</button><button id="fullscreen" type="button" aria-pressed="false">Pantalla completa</button></div>
+      </div>
+    </section>
+    <div class="howto"><div><b>Gira</b><span>Arrastra con el mouse o el dedo para ver el cajón desde todos los lados.</span></div><div><b>Toca</b><span>Selecciona cualquier objeto para leer qué es y qué significa.</span></div><div><b>Nombres</b><span>Activa «Ver nombres» para ver todo etiquetado de una vez.</span></div></div>
+  </section>
+
+  <section id="elementos" aria-labelledby="elements-title">
+    <div class="info-heading"><h2 id="elements-title">Conoce cada elemento</h2><p>Pulsa «Ver en el modelo» y la cámara te llevará hasta él.</p></div>
+    <div class="group"><div class="group-head"><span class="group-icon" aria-hidden="true">🥁</span><div><h3>Música y danza</h3><p>El corazón de la cultura afroperuana: ritmo, percusión y movimiento.</p></div></div>
+      <div class="elements">
+        <article class="el"><span class="el-kind">Escenario</span><h4>Cajón de Chincha</h4><p>La gran caja de madera que da nombre a la escena. Funciona como un pequeño escenario donde conviven la música, el baile, la comida y los adornos que representan la identidad chinchana. Su forma rinde homenaje al cajón peruano, el instrumento nacido en la cultura afroperuana.</p><button type="button" class="locate" data-tag="Cajón de Chincha">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Instrumento</span><h4>Cajón (instrumento)</h4><p>Una caja de madera sobre la que el músico se sienta para tocarla con las manos, golpeando la tapa frontal; el sonido sale por un orificio en la parte trasera. Acompaña ritmos afroperuanos como el festejo y es reconocido como Patrimonio Cultural de la Nación.</p><button type="button" class="locate" data-tag="Cajón (instrumento)">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Instrumento</span><h4>Quijada de burro</h4><p>Se hace con la mandíbula seca de un burro. Al golpearla, los dientes sueltos vibran dentro del hueso y producen un sonido seco y chispeante; también se puede raspar con una varilla. Acompaña al cajón en la música afroperuana.</p><button type="button" class="locate" data-tag="Quijada de burro">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Danza</span><h4>Bailarina de festejo</h4><p>El festejo es una danza alegre y veloz de la cultura afroperuana, con zapateo, movimientos de cadera y palmas. La falda amplia y el pañuelo en alto acentúan el movimiento. Chincha, y en especial El Carmen, es considerado un gran centro de esta tradición.</p><button type="button" class="locate" data-tag="Bailarina de festejo">Ver en el modelo</button></article>
+      </div></div>
+    <div class="group"><div class="group-head"><span class="group-icon" aria-hidden="true">🍲</span><div><h3>Sabores de Chincha</h3><p>Platos y dulces que se disfrutan en la mesa chinchana.</p></div></div>
+      <div class="elements">
+        <article class="el"><span class="el-kind">Plato típico</span><h4>Carapulcra</h4><p>Guiso de papa seca (papa deshidratada de origen andino), maní molido, ají panca y especias, que suele prepararse con cerdo o pollo. Es uno de los platos más emblemáticos de la cocina afroperuana y de Chincha.</p><button type="button" class="locate" data-tag="Carapulcra">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Plato típico</span><h4>Sopa seca</h4><p>Fideos con una salsa de ajíes y hierbas como la albahaca. Se sirve junto a la carapulcra en la famosa combinación «carapulcra con sopa seca», casi una seña de identidad de la mesa chinchana.</p><button type="button" class="locate" data-tag="Sopa seca">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Comida tradicional</span><h4>Tamal</h4><p>Masa de maíz con relleno, envuelta en hoja y cocida al vapor. Es un alimento típico de mañanas y celebraciones en todo el Perú, y cada región le da su toque particular.</p><button type="button" class="locate" data-tag="Tamal">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Dulce</span><h4>Chocotejas</h4><p>La teja es un dulce tradicional de la región de Ica, elaborado con manjar blanco y frutos secos. La chocoteja la cubre con chocolate y es un clásico para llevar de regalo.</p><button type="button" class="locate" data-tag="Chocotejas">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Cultivo</span><h4>Uvas de Chincha</h4><p>El cultivo de la vid llegó al valle en la época colonial y sigue siendo parte de la identidad de la región. Con sus uvas se elaboran pisco y vino.</p><button type="button" class="locate" data-tag="Uvas de Chincha">Ver en el modelo</button></article>
+      </div></div>
+    <div class="group"><div class="group-head"><span class="group-icon" aria-hidden="true">🌴</span><div><h3>Paisaje e historia</h3><p>El valle, el desierto y las huellas del pasado.</p></div></div>
+      <div class="elements">
+        <article class="el"><span class="el-kind">Arquitectura</span><h4>Iglesia</h4><p>Evoca la arquitectura colonial de la zona. Las haciendas y sus capillas recuerdan la historia de las personas africanas esclavizadas que trabajaron en la región y de cuya cultura nace la música afroperuana.</p><button type="button" class="locate" data-tag="Iglesia">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Paisaje</span><h4>Viñedo</h4><p>Hileras de vid sostenidas por postes y alambre. Chincha forma parte de la región vitivinícola de Ica, y cada año se celebran fiestas alrededor de la uva y la vendimia.</p><button type="button" class="locate" data-tag="Viñedo">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Paisaje</span><h4>Palmera</h4><p>Árboles típicos de los valles de la costa, que dan sombra a haciendas y plazas. En la escena enmarcan el cajón y le dan profundidad al paisaje.</p><button type="button" class="locate" data-tag="Palmera">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Paisaje</span><h4>Dunas de Ica</h4><p>Ica es famosa por sus desiertos y dunas, como las que rodean la laguna de Huacachina. Contrastan con los valles verdes donde crecen los viñedos.</p><button type="button" class="locate" data-tag="Dunas de Ica">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Ambiente</span><h4>Cielo pintado</h4><p>Un atardecer cálido pintado al fondo: sol bajo, nubes y cielo azul. Sirve de telón de fondo, como en las escenas pintadas a mano.</p><button type="button" class="locate" data-tag="Cielo pintado">Ver en el modelo</button></article>
+      </div></div>
+    <div class="group"><div class="group-head"><span class="group-icon" aria-hidden="true">🎉</span><div><h3>Ambiente de fiesta</h3><p>Los detalles que convierten la escena en una celebración.</p></div></div>
+      <div class="elements">
+        <article class="el"><span class="el-kind">Adorno</span><h4>Banderines y luces</h4><p>Los banderines de colores y las luces colgantes son un adorno clásico de fiestas populares y ferias en el Perú. También hay una guirnalda pequeña dentro del cajón.</p><button type="button" class="locate" data-tag="Banderines y luces">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Adorno</span><h4>Velas</h4><p>Las velas y las flores acompañan altares, procesiones y celebraciones. Dentro del cajón aportan luz cálida y color.</p><button type="button" class="locate" data-tag="Velas">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Adorno</span><h4>Farol</h4><p>Los faroles iluminan la plaza cuando cae la tarde, alargan la fiesta y crean un ambiente cálido.</p><button type="button" class="locate" data-tag="Farol">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Artesanía</span><h4>Cántaro de arcilla</h4><p>Las vasijas y botijas de barro se usaron en la región para guardar y fermentar vino y pisco. Aquí decoran el borde de la escena.</p><button type="button" class="locate" data-tag="Cántaro de arcilla">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Textil</span><h4>Manta tejida</h4><p>Los tejidos son una de las artes más antiguas del Perú; en Ica floreció la cultura Paracas, célebre por sus mantos bordados. La manta del suelo y la alfombra interior rinden homenaje a esa tradición.</p><button type="button" class="locate" data-tag="Manta tejida">Ver en el modelo</button></article>
+        <article class="el"><span class="el-kind">Escenario</span><h4>Plataforma de madera</h4><p>Una base circular rodeada de luces de feria. Eleva el cajón como si fuera un escenario de peña o de fiesta, para que sea el centro de la atención.</p><button type="button" class="locate" data-tag="Plataforma de madera">Ver en el modelo</button></article>
+      </div></div>
+  </section>
+
+  <section id="cultura" aria-labelledby="meaning-title">
+    <div class="info-heading"><h2 id="meaning-title">Lo que representa</h2><p>Tradición, música y orgullo cultural.</p></div>
+    <div class="info">
+      <article><span class="card-number">01 / SONIDO</span><h3>Música afroperuana</h3><p>El cajón peruano es uno de los instrumentos emblemáticos de la música afroperuana y acompaña ritmos como el festejo.</p></article>
+      <article><span class="card-number">02 / MOVIMIENTO</span><h3>Danza y celebración</h3><p>La escena se inspira en el festejo, una expresión llena de ritmo, energía, pañuelos y movimiento.</p></article>
+      <article><span class="card-number">03 / IDENTIDAD</span><h3>Orgullo chinchano</h3><p>El paisaje, las palmeras y los detalles de la escena evocan la identidad cultural de la provincia de Chincha.</p></article>
+    </div>
+    <div class="closing-note">“La cultura se mantiene viva cuando conocemos, valoramos y compartimos nuestras tradiciones”.</div>
+  </section>
+</main>
+<footer><span>Proyecto educativo 3D · Cultura de Chincha · Ica, Perú</span><span>Hecho con <a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a> · <a href="#top">Volver arriba</a></span></footer>
+<script>
+(()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window))return;
+const els=document.querySelectorAll('.el,.info article,.group-head,.howto div,.closing-note');
+els.forEach((e,i)=>{e.classList.add('reveal');e.style.animationDelay=(i%3)*70+'ms';});
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}}),{threshold:.1});
+els.forEach(e=>io.observe(e));})();
+</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+const canvas=document.querySelector('#scene'),scene=new THREE.Scene();
+{const c=document.createElement('canvas');c.width=4;c.height=512;const x=c.getContext('2d'),gr=x.createLinearGradient(0,0,0,512);
+gr.addColorStop(0,'#243f52');gr.addColorStop(.45,'#b9744c');gr.addColorStop(.62,'#8f5a3c');gr.addColorStop(1,'#875238');
+x.fillStyle=gr;x.fillRect(0,0,4,512);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;scene.background=t;}scene.fog=new THREE.Fog('#875238',19,36);
+const camera=new THREE.PerspectiveCamera(36,1,.1,100);camera.position.set(6.8,4.8,9.4);
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.2;
+// Shadows are deliberately disabled: they can create edge acne/flicker on a small model.
+renderer.shadowMap.enabled=false;
+scene.add(new THREE.HemisphereLight(0xffe5c5,0x39251b,2.25));
+const key=new THREE.DirectionalLight(0xffd19a,2.8);key.position.set(5,9,7);scene.add(key);
+const warm=new THREE.PointLight(0xffa64d,20,13);warm.position.set(-2,3,2);scene.add(warm);
+const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.07;controls.target.set(0,1.85,0);controls.minDistance=2.35;controls.maxDistance=23;controls.maxPolarAngle=Math.PI*.49;
+const M=(c,r=.7,m=0)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:m});
+const wood=M('#995126'),frontWood=M('#c47a3c'),dark=M('#4c2616'),cream=M('#f2dfbd'),white=M('#fff4df'),red=M('#a82e28'),green=M('#39703e'),gold=M('#d5a24e',.4,.25),blue=M('#42647a');
+function mesh(parent,geo,material,x,y,z){const o=new THREE.Mesh(geo,material);o.position.set(x,y,z);parent.add(o);return o}
+function block(parent,w,h,d,material,x,y,z){return mesh(parent,new THREE.BoxGeometry(w,h,d),material,x,y,z)}
+function ball(parent,r,material,x,y,z,sx=1,sy=1,sz=1){const o=mesh(parent,new THREE.SphereGeometry(r,18,14),material,x,y,z);o.scale.set(sx,sy,sz);return o}
+function rod(parent,a,b,r,material){const A=new THREE.Vector3(...a),B=new THREE.Vector3(...b),v=new THREE.Vector3().subVectors(B,A);const o=mesh(parent,new THREE.CylinderGeometry(r,r,v.length(),10),material,...A.clone().add(B).multiplyScalar(.5).toArray());o.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),v.normalize());return o}
+
+function tube(parent,pts,r,material){const c=new THREE.CatmullRomCurve3(pts.map(p=>new THREE.Vector3(...p)));return mesh(parent,new THREE.TubeGeometry(c,28,r,7,false),material,0,0,0)}
+
+// Registro de objetos con nombre: sirve para "Ver nombres" y para la tarjeta al tocarlos.
+const tags=[];
+function tag(name,desc,objs,opt={}){objs=[].concat(objs);objs.forEach(o=>o.userData.tag=name);tags.push({name,desc,objs,...opt});}
+function tagFrom(parent,from,name,desc,opt){tag(name,desc,parent.children.slice(from),opt);}
+// FESTIVE ENVIRONMENT: replace the empty dark void with a warm illustrated backdrop.
+const backdropCanvas=document.createElement('canvas');
+backdropCanvas.width=1600;backdropCanvas.height=900;
+const bg=backdropCanvas.getContext('2d');
+const skyGrad=bg.createLinearGradient(0,0,0,900);
+skyGrad.addColorStop(0,'#27465a');skyGrad.addColorStop(.48,'#c47b50');skyGrad.addColorStop(1,'#e4ae70');
+bg.fillStyle=skyGrad;bg.fillRect(0,0,1600,900);
+// Soft sunset glow.
+const glow=bg.createRadialGradient(1220,410,25,1220,410,260);
+glow.addColorStop(0,'rgba(255,224,158,.9)');glow.addColorStop(1,'rgba(255,204,126,0)');
+bg.fillStyle=glow;bg.fillRect(900,100,600,600);
+bg.fillStyle='#ffe1a1';bg.beginPath();bg.arc(1220,410,82,0,Math.PI*2);bg.fill();
+// Distant hills.
+bg.fillStyle='#8e5940';bg.beginPath();bg.moveTo(0,590);
+bg.bezierCurveTo(250,470,420,560,650,520);bg.bezierCurveTo(900,440,1120,565,1320,500);
+bg.bezierCurveTo(1450,465,1510,500,1600,465);bg.lineTo(1600,900);bg.lineTo(0,900);bg.closePath();bg.fill();
+bg.fillStyle='#684432';bg.beginPath();bg.moveTo(0,700);
+bg.bezierCurveTo(300,615,480,690,760,640);bg.bezierCurveTo(1060,585,1300,690,1600,610);
+bg.lineTo(1600,900);bg.lineTo(0,900);bg.closePath();bg.fill();
+// A distant Chincha valley / vineyard pattern.
+bg.strokeStyle='rgba(235,190,117,.45)';bg.lineWidth=7;
+for(let i=0;i<9;i++){bg.beginPath();bg.moveTo(0,760+i*20);bg.quadraticCurveTo(750,650+i*22,1600,760+i*20);bg.stroke();}
+// Village silhouettes along the horizon.
+bg.fillStyle='#49352b';
+for(const [x,y,w,h] of [[110,585,130,135],[290,610,170,110],[1320,575,150,145],[1480,615,95,105]]){
+  bg.fillRect(x,y,w,h);bg.beginPath();bg.moveTo(x-18,y);bg.lineTo(x+w/2,y-72);bg.lineTo(x+w+18,y);bg.closePath();bg.fill();
+  bg.fillStyle='#d99a58';bg.fillRect(x+w*.42,y+h*.48,22,48);bg.fillStyle='#49352b';
+}
+// Palm silhouettes at the outer edges.
+function drawPalm(x,y,s){
+  bg.strokeStyle='#3c3328';bg.lineWidth=22*s;bg.beginPath();bg.moveTo(x,y);bg.quadraticCurveTo(x-18*s,y-150*s,x+8*s,y-270*s);bg.stroke();
+  for(let i=0;i<9;i++){const a=-Math.PI*.92+i*Math.PI*.23;bg.strokeStyle='#3e4a35';bg.lineWidth=13*s;bg.beginPath();bg.moveTo(x+8*s,y-270*s);bg.quadraticCurveTo(x+Math.cos(a)*90*s,y-330*s+Math.sin(a)*25*s,x+Math.cos(a)*190*s,y-260*s+Math.sin(a)*100*s);bg.stroke();}
+}
+drawPalm(95,860,.75);drawPalm(1500,850,.7);
+// Subtle warm border texture.
+bg.fillStyle='rgba(55,31,20,.18)';bg.fillRect(0,0,1600,900);
+bg.globalCompositeOperation='destination-out';
+for(const [x0,x1] of [[0,230],[1600,1370]]){const gr=bg.createLinearGradient(x0,0,x1,0);gr.addColorStop(0,'rgba(0,0,0,1)');gr.addColorStop(1,'rgba(0,0,0,0)');bg.fillStyle=gr;bg.fillRect(Math.min(x0,x1),0,230,900);}
+bg.globalCompositeOperation='source-over';
+const backdropTex=new THREE.CanvasTexture(backdropCanvas);backdropTex.colorSpace=THREE.SRGBColorSpace;
+const backdrop=mesh(scene,new THREE.PlaneGeometry(22,12.4),new THREE.MeshBasicMaterial({map:backdropTex, fog:false, transparent:true}),0,4.05,-5.6);
+backdrop.renderOrder=-5;
+
+// A string of colorful festival pennants across the upper background.
+const gar0=scene.children.length;
+const garlandPoints=[[-5.7,5.55,-4.75],[-3.5,4.95,-4.75],[0,4.65,-4.75],[3.5,4.95,-4.75],[5.7,5.55,-4.75]];
+tube(scene,garlandPoints,.023,M('#e6bd7a'));
+const flagColors=['#b94732','#e7b653','#3c7770','#e9ddc2','#9c3e35','#d68a48'];
+for(let i=0;i<13;i++){
+  const x=-5.25+i*.875;
+  const y=4.68+.028*x*x;
+  const shape=new THREE.Shape();shape.moveTo(-.16,.08);shape.lineTo(.16,.08);shape.lineTo(0,-.28);shape.closePath();
+  const flag=mesh(scene,new THREE.ShapeGeometry(shape),new THREE.MeshBasicMaterial({color:flagColors[i%flagColors.length],side:THREE.DoubleSide}),x,y,-4.69);
+}
+const bulbMat=new THREE.MeshStandardMaterial({color:'#ffd58a',emissive:'#ff9a37',emissiveIntensity:1.7,roughness:.3});
+for(let i=0;i<7;i++){
+  const x=-4.5+i*1.5,y=4.48+.025*x*x;
+  ball(scene,.075,bulbMat,x,y,-4.62);
+}
+// Hanging lanterns at both sides of the scene.
+for(const x of [-4.45,4.45]){
+  rod(scene,[x,5.15,-4.65],[x,4.72,-4.65],.018,M('#d4a75e'));
+  const lantern=mesh(scene,new THREE.BoxGeometry(.34,.42,.28),M('#9d4d2e',.5),x,4.48,-4.65);
+  const inner=ball(scene,.11,bulbMat,x,4.48,-4.48,1,1,1);
+  const cap=mesh(scene,new THREE.ConeGeometry(.25,.16,4),M('#d4a75e'),x,4.77,-4.65);cap.rotation.y=Math.PI/4;
+}
+tagFrom(scene,gar0,'Banderines y luces','Los banderines de colores y las luces colgantes crean el ambiente de jarana y fiesta popular.',{at:[0,5.05,-4.6]});
+// Low circular wooden display platform grounds the cajón in the scene.
+const dais=mesh(scene,new THREE.CylinderGeometry(2.34,2.42,.24,96),M('#754226',.62),0,-.11,0);
+const daisTop=mesh(scene,new THREE.CylinderGeometry(2.32,2.32,.018,96),M('#bd8250',.72),0,.012,0);
+const daisTrim=mesh(scene,new THREE.TorusGeometry(2.25,.035,10,96),M('#e0b46e',.38,.18),0,.025,0);
+const daisInner=mesh(scene,new THREE.TorusGeometry(2.12,.012,8,96),M('#e0b46e',.42,.15),0,.026,0);
+daisTrim.rotation.x=daisInner.rotation.x=Math.PI/2; // acostados sobre la plataforma
+tag('Plataforma de madera','Sostiene el cajón, como un pequeño escenario donde ocurre la fiesta.',[dais,daisTop,daisTrim,daisInner],{at:[1.9,.12,1.6]});
+const floor=mesh(scene,new THREE.PlaneGeometry(100,100),M('#69442f',1),0,-.26,0);floor.rotation.x=-Math.PI/2;
+// AMBIENTE EXTERIOR: arena de Ica, palmeras, viñedos, dunas, faroles y cántaros.
+{
+const sc=document.createElement('canvas');sc.width=sc.height=256;const sx=sc.getContext('2d');
+sx.fillStyle='#8a5c3a';sx.fillRect(0,0,256,256);
+for(let i=0;i<2200;i++){sx.fillStyle='rgba('+(Math.random()<.5?'235,190,130':'70,40,25')+','+(.08+Math.random()*.14)+')';sx.fillRect(Math.random()*256,Math.random()*256,1+Math.random()*2.5,1+Math.random()*2.5);}
+const sand=new THREE.CanvasTexture(sc);sand.wrapS=sand.wrapT=THREE.RepeatWrapping;sand.repeat.set(14,14);sand.colorSpace=THREE.SRGBColorSpace;
+floor.material=new THREE.MeshStandardMaterial({map:sand,roughness:1});
+// Dunas al fondo.
+const dunes=[];
+for(const [x,z,k] of [[-7.5,-4.8,3.5],[7.2,-5,3.2],[0,-5.1,4.2]])dunes.push(ball(scene,1,M('#a8714a',1),x,-.26,z,k,.7,1.1));
+tag('Dunas de Ica','Ica es tierra de desierto y dunas, como las de Huacachina, junto a valles verdes donde se cultiva la vid.',dunes,{each:true});
+// Manta tejida frente a la plataforma.
+let e0=scene.children.length;
+block(scene,3.6,.02,1.5,red,0,-.245,3.9);
+for(let i=0;i<5;i++)block(scene,3.6,.005,.08,cream,0,-.233,3.35+i*.3);
+tagFrom(scene,e0,'Manta tejida','Las mantas y tejidos de colores son parte de las fiestas y ferias del sur del Perú.');
+// Palmeras.
+const trunk=M('#4b3826'),palms=[];
+function palm(x,z,h,lean,s=1){
+  const p=new THREE.Group();scene.add(p);palms.push(p);
+  const top=[x+lean,h,z];
+  tube(p,[[x,-.25,z],[x+lean*.3,h*.5,z+.05],top],.11*s,trunk);
+  for(let i=0;i<9;i++){const a=i*Math.PI*2/9+x,dx=Math.cos(a),dz=Math.sin(a);
+    tube(p,[top,[top[0]+dx*.7*s,h+.35*s,top[2]+dz*.7*s],[top[0]+dx*1.5*s,h-.15*s,top[2]+dz*1.5*s]],.055*s,green);}
+  ball(p,.14*s,M('#6b4a2a'),top[0],h-.05,top[2]);
+}
+palm(-4.7,-1.2,4.6,.3);palm(4.9,-1.8,5,-.35);palm(-6.4,-3.2,5.4,.4,1.15);palm(6.5,-3.6,4.8,-.3,1.05);
+tag('Palmera','Las palmeras dan sombra y color a los valles costeños de Chincha, rodeados de desierto.',palms,{each:true});
+// Viñedo de Chincha: hileras de postes, hojas, alambre y racimos.
+const leaf=M('#4c7a3a'),grapeC=M('#633d7a'),post=M('#5a3a22'),wire=M('#c9a56a'),vines=[];
+function vineRow(x0,x1,z){
+  const r=new THREE.Group();scene.add(r);vines.push(r);
+  for(let i=0;i<7;i++){const x=x0+(x1-x0)*i/6;
+    rod(r,[x,-.25,z],[x,1,z],.03,post);
+    ball(r,.2,leaf,x,.85,z,1.2,.9,.7);
+    for(let k=0;k<3;k++)ball(r,.06,grapeC,x+(k-1)*.1,.55-(k%2)*.07,z+.12,1,1.2,1);
+  }
+  tube(r,[[x0,.95,z],[(x0+x1)/2,.9,z],[x1,.95,z]],.012,wire);
+}
+vineRow(-6.2,-3,-3.6);vineRow(3,6.2,-3.9);
+tag('Viñedo','Chincha forma parte de la región vitivinícola de Ica: sus uvas se usan para hacer pisco y vino.',vines,{each:true});
+// Faroles y cántaros de arcilla a los lados.
+const jarPts=[[0,0],[.18,.02],[.3,.2],[.32,.38],[.2,.58],[.14,.7],[.18,.78],[.12,.8]].map(p=>new THREE.Vector2(...p));
+const jarMat=M('#b5653a',.8),lamps=[],jars=[];
+for(const sd of [-1,1]){
+  const x=sd*3.5,lp=new THREE.Group();scene.add(lp);lamps.push(lp);
+  rod(lp,[x,-.25,2.2],[x,2.3,2.2],.04,trunk);
+  mesh(lp,new THREE.BoxGeometry(.3,.38,.3),M('#9d4d2e',.5),x,2.5,2.2);
+  ball(lp,.12,bulbMat,x,2.5,2.2);
+  const pl=new THREE.PointLight(0xffa64d,6,6);pl.position.set(x,2.5,2.2);scene.add(pl);
+  for(const [jx,jz,js] of [[sd*3.0,3.1,1],[sd*3.8,2.7,.75]]){const j=mesh(scene,new THREE.LatheGeometry(jarPts,24),jarMat,jx,-.25,jz);j.scale.setScalar(js);jars.push(j);}
+}
+tag('Farol','Los faroles iluminan la fiesta cuando cae la tarde.',lamps,{each:true});
+tag('Cántaro de arcilla','Las vasijas de arcilla son una tradición antigua en la costa sur, usadas para guardar agua, chicha y alimentos.',jars,{each:true});
+// Luces de feria alrededor de la plataforma.
+e0=scene.children.length;
+for(let i=0;i<16;i++){const a=i*Math.PI/8;ball(scene,.06,bulbMat,Math.cos(a)*2.62,-.1,Math.sin(a)*2.62);}
+tagFrom(scene,e0,'Luces de feria','Pequeñas luces rodean la plataforma, como en una feria o una peña.',{at:[0,.05,2.62]});
+}
+const g=new THREE.Group();g.position.y=.02;scene.add(g);
+// Cabinet shell: all boards have tiny clearances; no faces are coplanar.
+const W=3.3,H=4,D=2.5,t=.16;
+block(g,W-2*t,H,t,dark,0,H/2,-D/2+t/2); // back
+block(g,t,H,D-2*t,wood,-W/2+t/2,H/2,0);
+block(g,t,H,D-2*t,wood,W/2-t/2,H/2,0);
+block(g,W-2*t,t,D-2*t,dark,0,t/2,0);
+block(g,W-2*t,t,D-2*t,dark,0,H-t/2,0);
+// Front frame: one continuous header beam overlaps both side uprights.
+// This creates a real joined corner instead of two rails that almost meet.
+const fz=D/2-t*.35,fw=.22,fh=.72,bh=.20;
+block(g,W-2*fw-.025,bh,.12,frontWood,0,bh/2+.01,fz);
+block(g,fw,H-fh-bh-.05,.12,frontWood,-W/2+fw/2+.01,(H-fh+bh)/2,fz);
+block(g,fw,H-fh-bh-.05,.12,frontWood,W/2-fw/2-.01,(H-fh+bh)/2,fz);
+// Solid top beam spans the full cabinet width and slightly caps the side rails.
+const headerFrontZ=fz+.11;
+block(g,W+.02,fh+.04,.18,frontWood,0,H-fh/2-.02,fz+.02);
+// Opaque title plaque spans almost the full header width.
+const cv=document.createElement('canvas');cv.width=1200;cv.height=300;const cx=cv.getContext('2d');
+const grad=cx.createLinearGradient(0,0,0,300);grad.addColorStop(0,'#d18a48');grad.addColorStop(1,'#a85e2d');
+cx.fillStyle=grad;cx.fillRect(0,0,1200,300);
+cx.strokeStyle='#6b351c';cx.lineWidth=12;cx.strokeRect(12,12,1176,276);
+cx.fillStyle='#542b18';cx.font='bold 166px Georgia';cx.textAlign='center';cx.textBaseline='middle';cx.fillText('CHINCHA',600,148);
+const tex=new THREE.CanvasTexture(cv);tex.colorSpace=THREE.SRGBColorSpace;
+mesh(g,new THREE.PlaneGeometry(2.62,.56),new THREE.MeshBasicMaterial({map:tex}),-.02,3.62,headerFrontZ+.012);
+// Corner straps cover the header-to-upright joints and make the construction visibly solid.
+for(const x of [-1.56,1.56]){
+  block(g,.105,.62,.035,gold,x,3.62,headerFrontZ+.025);
+  ball(g,.035,dark,x,3.37,headerFrontZ+.05,.8,.8,.45);
+  ball(g,.035,dark,x,3.87,headerFrontZ+.05,.8,.8,.45);
+}
+// Ondas talladas sobre el travesaño inferior (antes flotaban en el vano frontal).
+tube(g,[[-1.1,.10,fz+.062],[-.74,.15,fz+.062],[-.37,.10,fz+.062],[0,.15,fz+.062],[.37,.10,fz+.062],[.74,.15,fz+.062],[1.1,.10,fz+.062]],.02,dark);
+// Studs safely offset from the front surface.
+for(const x of [-1.48,1.48])for(const y of [.38,.8,1.2,2.8,3.12])ball(g,.04,gold,x,y,fz+.075,.9,.9,.5);
+tagFrom(g,0,'Cajón de Chincha','El gran cajón que guarda toda la escena: la bailarina, la música, la comida y los adornos de la cultura chinchana.',{at:[0,4.08,1.2]});
+let k0=g.children.length;
+// Interior rug: sits above the cabinet base with a visible air gap.
+block(g,2.68,.025,1.98,red,0,.235,-.02);
+for(let i=0;i<10;i++)block(g,2.54,.009,.012,cream,0,.253,-.88+i*.19);
+tagFrom(g,k0,'Alfombra tejida','Una alfombra roja con franjas crema sirve de escenario a la bailarina.');
+k0=g.children.length;
+// Backdrop plane and decorative sun/clouds.
+mesh(g,new THREE.PlaneGeometry(2.75,2.62),new THREE.MeshBasicMaterial({color:'#42647a'}),0,2.0,-1.12);
+ball(g,.31,M('#e7a45e'),-.8,2.75,-1.105,1,.75,.12);
+for(const [x,y] of [[-.6,2.52],[.4,2.68],[.92,2.42]])ball(g,.1,white,x,y,-1.095,1.8,.55,.2);
+tagFrom(g,k0,'Cielo pintado','El fondo pintado con sol y nubes sirve de cielo a la escena.');
+// Church stands in front of the backdrop; each decorative layer has a different depth.
+const church=new THREE.Group();g.add(church);
+block(church,1.45,.78,.10,cream,0,1.12,-1.00);
+for(const x of [-.63,.63]){
+ block(church,.39,1.12,.10,cream,x,1.28,-.99);
+ const roof=mesh(church,new THREE.ConeGeometry(.29,.34,4),cream,x,2.02,-.99);roof.rotation.y=Math.PI/4;
+ block(church,.12,.32,.025,dark,x,1.32,-.93);
+}
+const roof=mesh(church,new THREE.ConeGeometry(.34,.32,4),cream,0,1.68,-.98);roof.rotation.y=Math.PI/4;
+block(church,.24,.45,.025,dark,0,.99,-.93);
+for(const x of [-.63,0,.63])block(church,.06,.12,.025,gold,x,2.23,-.96);
+tag('Iglesia','Evoca la arquitectura colonial de la zona, como las iglesias y haciendas históricas de Chincha.',church);
+k0=g.children.length;
+// Palmera interior: hojas más cortas para que queden dentro de las paredes.
+rod(g,[.8,.32,-.5],[.8,1.88,-.5],.085,dark);
+for(let i=0;i<8;i++){const a=i*Math.PI/4;tube(g,[[.8,1.83,-.5],[.8+Math.cos(a)*.26,2.06,-.5+Math.sin(a)*.17],[.8+Math.cos(a)*.5,1.94,-.5+Math.sin(a)*.3]],.045,green);}
+tagFrom(g,k0,'Palmera','Un pequeño árbol que recuerda los paisajes del valle.');
+// Dancer figure — refined silhouette, layered festejo skirt and visible accessories.
+const dancer=new THREE.Group();
+dancer.position.set(-.55,.25,.22);
+g.add(dancer);
+tag('Bailarina de festejo','El festejo es un baile alegre de la cultura afroperuana, con zapateo, palmas y pañuelo al aire.',dancer);
+
+const skin=M('#925b3d',.82), skinLight=M('#b87952',.78);
+const hair=M('#211711',.9), dress=M('#f3e8d3',.72), dressShadow=M('#d5c3a8',.78);
+const sash=M('#a82e28',.68), trim=M('#d6a64f',.42,.12), shoe=M('#34231b',.8);
+
+// Head, neck, hair and face.
+rod(dancer,[0,1.27,0],[0,1.39,0],.065,skin);
+ball(dancer,.145,skin,0,1.53,0,1,.98,.9);
+ball(dancer,.153,hair,0,1.61,-.025,1.04,.62,1.0);
+ball(dancer,.075,hair,-.105,1.55,.055,.72,.9,.75);
+ball(dancer,.075,hair,.105,1.55,.055,.72,.9,.75);
+// Facial features are small but visible from the front.
+ball(dancer,.012,dark, -.047,1.545,.129,1,.8,.5);
+ball(dancer,.012,dark,  .047,1.545,.129,1,.8,.5);
+tube(dancer,[[-.035,1.49,.13],[0,1.477,.145],[.035,1.49,.13]],.009,dark);
+ball(dancer,.035,trim,0,1.685,.005,.9,.5,.55); // hair flower
+
+// Bodice and waist sash.
+block(dancer,.29,.34,.18,dress,0,1.19,0);
+block(dancer,.31,.075,.195,sash,0,1.27,.012);
+block(dancer,.12,.06,.205,trim,0,1.27,.02);
+
+// Full flared skirt with layered hem and radial pleat lines.
+const skirt=mesh(dancer,new THREE.ConeGeometry(.48,.55,40,3,false),dress,0,.78,0);
+skirt.scale.y=.92;
+const underskirt=mesh(dancer,new THREE.ConeGeometry(.495,.16,40,1,false),sash,0,.535,0);
+underskirt.scale.y=.8;
+const hem=mesh(dancer,new THREE.TorusGeometry(.49,.02,8,48),trim,0,.471,0);
+hem.rotation.x=Math.PI/2;
+for(let i=0;i<14;i++){
+  const a=i*Math.PI*2/14;
+  tube(dancer,[[Math.cos(a)*.13,.99,Math.sin(a)*.07],
+               [Math.cos(a)*.27,.77,Math.sin(a)*.15],
+               [Math.cos(a)*.43,.56,Math.sin(a)*.19]],.009,dressShadow);
+}
+// Decorative bodice neckline and small buttons.
+tube(dancer,[[-.12,1.34,.095],[0,1.29,.105],[.12,1.34,.095]],.014,trim);
+for(let i=0;i<3;i++)ball(dancer,.018,trim,0,1.21-i*.065,.105);
+
+// Arms raised in a lively festejo pose, with hands and a flowing handkerchief.
+rod(dancer,[-.13,1.29,0],[-.34,1.43,.015],.052,skin);
+rod(dancer,[-.34,1.43,.015],[-.52,1.72,.025],.043,skin);
+ball(dancer,.055,skin,-.535,1.755,.03,.85,1.1,.8);
+rod(dancer,[.13,1.29,0],[.35,1.44,.015],.052,skin);
+rod(dancer,[.35,1.44,.015],[.52,1.66,.025],.043,skin);
+ball(dancer,.055,skin,.535,1.695,.03,.85,1.1,.8);
+// White pañuelo with a softly folded triangular shape.
+const scarfShape=new THREE.Shape();
+scarfShape.moveTo(-.03,0);scarfShape.quadraticCurveTo(-.2,.12,-.31,.18);
+scarfShape.lineTo(-.19,-.16);scarfShape.lineTo(.02,-.04);scarfShape.closePath();
+const scarf=mesh(dancer,new THREE.ShapeGeometry(scarfShape),new THREE.MeshStandardMaterial({color:'#fff9e9',side:THREE.DoubleSide,roughness:.8}),-.64,1.83,.035);
+scarf.rotation.z=-.15;
+tube(dancer,[[-.64,1.83,.045],[-.78,1.91,.045],[-.91,1.84,.045]],.012,trim);
+
+// Legs and shoes in a small dancing step.
+rod(dancer,[-.105,.54,0],[-.20,.29,.035],.047,skin);
+rod(dancer,[.105,.54,0],[.22,.32,.08],.047,skin);
+rod(dancer,[-.20,.29,.035],[-.30,.24,.12],.035,shoe);
+rod(dancer,[.22,.32,.08],[.34,.27,.14],.035,shoe);
+ball(dancer,.045,trim,-.30,.24,.12,1.4,.35,.8);
+ball(dancer,.045,trim,.34,.27,.14,1.4,.35,.8);
+// Cajón peruano: caja de madera con tapa frontal, rendija superior, tornillos y orificio de resonancia atrás.
+const cj=new THREE.Group();cj.position.set(.68,.62,.1);cj.rotation.y=-.35;g.add(cj);
+block(cj,.5,.62,.46,wood,0,0,0);
+block(cj,.44,.5,.02,frontWood,0,-.03,.235);          // tapa (frente)
+block(cj,.44,.03,.025,dark,0,.245,.236);             // rendija superior de la tapa
+for(const x of [-.19,.19])for(const y of [.2,-.26])ball(cj,.018,gold,x,y,.25,1,1,.5);
+block(cj,.52,.03,.48,dark,0,.325,0);                 // tapa superior (asiento)
+mesh(cj,new THREE.CircleGeometry(.07,24),dark,0,.02,-.231).rotation.y=Math.PI; // orificio trasero
+tag('Cajón (instrumento)','Instrumento de percusión afroperuano: el músico se sienta sobre él y golpea la tapa frontal. Es Patrimonio Cultural de la Nación.',cj);
+// Chincha food display: carapulcra, sopa seca, tamal and local grapes.
+const grapeMat=M('#633d7a'), stewMat=M('#713b20'), potatoMat=M('#a96b37'), noodleMat=M('#d6a34e');
+k0=g.children.length;
+mesh(g,new THREE.CylinderGeometry(.24,.20,.18,24),M('#a8753e'),-1.02,.34,-.3);
+for(let i=0;i<12;i++){const a=i*2.4,r=.07+(i%3)*.04;ball(g,.07,grapeMat,-1.02+Math.cos(a)*r,.47+(i%4)*.065,-.3+Math.sin(a)*r);}
+tagFrom(g,k0,'Uvas de Chincha','Los viñedos de la región dan uvas para el pisco y el vino.');
+// Three low serving dishes arranged along the front of the miniature stage.
+function dish(x,z,rx,rz){
+  mesh(g,new THREE.CylinderGeometry(rx,rx*.82,.055,28),gold,x,.29,z);
+  mesh(g,new THREE.CylinderGeometry(rx*.82,rx*.7,.025,28),M('#6b3821'),x,.325,z);
+}
+k0=g.children.length;
+// Carapulcra: dark reddish stew with small potato pieces.
+dish(-.42,.67,.31,.27);
+mesh(g,new THREE.CylinderGeometry(.245,.22,.07,28),stewMat,-.42,.37,.67);
+for(let i=0;i<7;i++)ball(g,.055,potatoMat,-.57+(i%4)*.095,.425,.59+Math.floor(i/4)*.13,1.2,.65,.9);
+for(let i=0;i<3;i++)ball(g,.025,green,-.5+i*.07,.47,.68,.7,.5,.7);
+tagFrom(g,k0,'Carapulcra','Guiso de papa seca, maní y especias; uno de los platos más emblemáticos de Chincha.');
+k0=g.children.length;
+// Sopa seca: nest of golden noodles on a plate.
+dish(.38,.67,.31,.27);
+for(let j=0;j<5;j++){
+ const pts=[];for(let k=0;k<=18;k++){const a=k/18*Math.PI*2+j*.65;const r=.06+j*.027;pts.push([.38+Math.cos(a)*r,.405+j*.003,.67+Math.sin(a)*r]);}
+ tube(g,pts,.018, noodleMat);
+}
+for(let i=0;i<3;i++)ball(g,.035,green,.27+i*.09,.43,.65,.8,.5,.8);
+tagFrom(g,k0,'Sopa seca','Fideos con salsa de albahaca y ají, que se sirven junto a la carapulcra.');
+k0=g.children.length;
+// Tamal wrapped in a green leaf, on its own small plate.
+dish(1.05,.62,.22,.23);
+const tamal=mesh(g,new THREE.BoxGeometry(.28,.16,.22),M('#d8b36d'),1.05,.40,.62);tamal.rotation.y=-.2;
+const leafMat=M('#52733a');
+for(let i=0;i<2;i++){
+ const leaf=mesh(g,new THREE.BoxGeometry(.31,.012,.12),leafMat,1.05,.49,.62);leaf.rotation.y=.35+i*.9;
+}
+tagFrom(g,k0,'Tamal','Masa de maíz envuelta en hoja y cocida al vapor.');
+k0=g.children.length;
+// Small plate of traditional sweets / chocotejas.
+dish(.98,-.28,.25,.20);
+for(let i=0;i<5;i++)ball(g,.052,M('#4d281c'),.84+(i%3)*.12,.39,-.34+Math.floor(i/3)*.12,.9,.7,.9);
+tagFrom(g,k0,'Chocotejas','Dulces tradicionales de Ica: manjar con frutos secos cubierto de chocolate.');
+
+// DETALLES INTERIORES
+k0=g.children.length;
+tube(g,[[-1.42,3.2,.7],[0,3.02,.7],[1.42,3.2,.7]],.012,M('#e6bd7a'));
+{
+  const cols=['#b94732','#e7b653','#3c7770','#e9ddc2','#9c3e35','#d68a48'];
+  const fs=new THREE.Shape();fs.moveTo(-.09,.05);fs.lineTo(.09,.05);fs.lineTo(0,-.17);fs.closePath();
+  for(let i=0;i<11;i++){const x=-1.3+i*.26;mesh(g,new THREE.ShapeGeometry(fs),new THREE.MeshBasicMaterial({color:cols[i%6],side:THREE.DoubleSide}),x,3.02+.18*(x/1.42)**2,.7);}
+}
+tagFrom(g,k0,'Guirnalda de banderines','Banderines de colores cuelgan dentro del cajón para darle aire de fiesta.');
+// Quijada de burro colgada del techo.
+const qj=new THREE.Group();qj.position.set(-1.12,2.55,-.5);g.add(qj);
+rod(qj,[0,1.27,0],[0,.3,0],.006,M('#e6bd7a'));
+const bone=M('#eadbb9',.8);
+ball(qj,.09,bone,0,0,0,.8,3.2,.6);
+ball(qj,.13,bone,.02,-.2,0,1,1.1,.6);
+for(let i=0;i<6;i++)block(qj,.025,.045,.03,white,.085,.2-i*.07,0);
+tag('Quijada de burro','Instrumento afroperuano de percusión hecho con la mandíbula de un burro: al golpearla, los dientes vibran y suenan.',qj);
+// Velas sobre la alfombra.
+k0=g.children.length;
+for(const [x,z,h] of [[-1.22,.78,.2],[-1.3,.56,.14],[-1.12,.9,.1]]){
+  mesh(g,new THREE.CylinderGeometry(.035,.035,h,12),cream,x,.2475+h/2,z);
+  ball(g,.026,bulbMat,x,.2475+h+.035,z,.8,1.5,.8);
+}
+tagFrom(g,k0,'Velas','Las velas dan luz cálida y acompañan las celebraciones.');
+// Macetas con flores en las esquinas del fondo.
+k0=g.children.length;
+for(const x of [-1.2,1.2]){
+  const z=-.85;
+  mesh(g,new THREE.CylinderGeometry(.11,.08,.15,16),M('#b5653a',.8),x,.325,z);
+  for(const [c,dx,dh] of [['#d9453a',-.06,.2],['#f0c04a',.05,.26],['#e8e0cf',0,.17],['#d9453a',.08,.12]]){
+    rod(g,[x,.4,z],[x+dx*1.3,.58+dh,z],.008,green);
+    ball(g,.045,M(c),x+dx*1.3,.6+dh,z);
+  }
+}
+tagFrom(g,k0,'Flores','Las flores adornan el altar y las fiestas populares.');
+
+const start=camera.position.clone(),target=controls.target.clone();
+document.querySelector('#front').onclick=()=>{camera.position.set(0,3.2,10.8);controls.target.set(0,1.9,0);controls.update();};
+document.querySelector('#inside').onclick=()=>{camera.position.set(.8,2.4,6.4);controls.target.set(0,1.7,-.3);controls.update();};
+document.querySelector('#reset').onclick=()=>{camera.position.copy(start);controls.target.copy(target);controls.update();};
+function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+new ResizeObserver(resize).observe(canvas);resize();
+
+// ETIQUETAS: nombres visibles ("Ver nombres") y tarjeta con información al tocar un objeto.
+scene.updateMatrixWorld(true);
+const labelLayer=document.querySelector('#labelLayer'),card=document.querySelector('#card'),tip=document.querySelector('#tip'),toggle=document.querySelector('#toggleLabels');
+const chips=[],bx=new THREE.Box3(),pv=new THREE.Vector3(),dirv=new THREE.Vector3();
+for(const t of tags){
+  const groups=t.each?t.objs.map(o=>[o]):[t.objs];
+  for(const parts of groups){
+    let at;
+    if(t.at)at=new THREE.Vector3(...t.at);
+    else{bx.makeEmpty();parts.forEach(o=>bx.expandByObject(o));at=bx.getCenter(new THREE.Vector3());at.y=bx.max.y+.04;}
+    const el=document.createElement('div');el.className='chip';el.textContent=t.name;el.style.display='none';labelLayer.appendChild(el);
+    chips.push({el,at,name:t.name,vis:true});
+  }
+}
+const owner=o=>{while(o&&!o.userData.tag)o=o.parent;return o?o.userData.tag:null};
+const occl=new THREE.Raycaster(),picker=new THREE.Raycaster(),mouse=new THREE.Vector2();
+let showLabels=false,frame=0;
+function updateLabels(check){
+  const w=canvas.clientWidth,h=canvas.clientHeight;
+  for(const c of chips){
+    pv.copy(c.at).project(camera);
+    const on=pv.z<1&&Math.abs(pv.x)<1.05&&Math.abs(pv.y)<1.05;
+    if(check&&on){
+      dirv.copy(c.at).sub(camera.position);const d=dirv.length();
+      occl.set(camera.position,dirv.normalize());occl.far=Math.max(d-.12,0);
+      const hit=occl.intersectObjects(scene.children,true)[0];
+      c.vis=!hit||owner(hit.object)===c.name;
+    }
+    if(on&&c.vis){c.el.style.display='';c.el.style.transform='translate('+((pv.x*.5+.5)*w)+'px,'+((-pv.y*.5+.5)*h)+'px) translate(-50%,-115%)';}
+    else c.el.style.display='none';
+  }
+}
+toggle.onclick=()=>{showLabels=!showLabels;toggle.setAttribute('aria-pressed',showLabels);toggle.textContent=showLabels?'Ocultar nombres':'Ver nombres';labelLayer.style.display=showLabels?'block':'none';tip.style.display='none';if(showLabels)updateLabels(true);};
+function pick(x,y){
+  const r=canvas.getBoundingClientRect();mouse.set((x-r.left)/r.width*2-1,-((y-r.top)/r.height)*2+1);
+  picker.setFromCamera(mouse,camera);
+  const hit=picker.intersectObjects(scene.children,true)[0];
+  return hit?owner(hit.object):null;
+}
+function showCard(name){const t=tags.find(t=>t.name===name);if(!t)return;document.querySelector('#cardName').textContent=t.name;document.querySelector('#cardDesc').textContent=t.desc;card.hidden=false;}
+card.querySelector('.card-close').onclick=()=>{card.hidden=true;};
+addEventListener('keydown',e=>{if(e.key==='Escape')card.hidden=true;});
+let down=null,hoverBusy=false;
+canvas.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY};});
+canvas.addEventListener('pointerup',e=>{
+  if(!down)return;const moved=Math.hypot(e.clientX-down.x,e.clientY-down.y);down=null;
+  if(moved>6)return;
+  const n=pick(e.clientX,e.clientY);if(n)showCard(n);else card.hidden=true;
+});
+canvas.addEventListener('pointermove',e=>{
+  if(e.pointerType!=='mouse'||e.buttons||hoverBusy)return;
+  hoverBusy=true;const cx=e.clientX,cy=e.clientY;
+  requestAnimationFrame(()=>{
+    hoverBusy=false;const n=pick(cx,cy);canvas.style.cursor=n?'pointer':'';
+    if(n&&!showLabels){const r=canvas.getBoundingClientRect();tip.textContent=n;tip.style.left=(cx-r.left+14)+'px';tip.style.top=(cy-r.top+14)+'px';tip.style.display='block';}
+    else tip.style.display='none';
+  });
+});
+canvas.addEventListener('pointerleave',()=>{tip.style.display='none';canvas.style.cursor='';});
+// PANTALLA COMPLETA (con respaldo para navegadores sin la API, como el iPhone).
+const stage=document.querySelector('.stage'),fsBtn=document.querySelector('#fullscreen');
+const fsEl=()=>document.fullscreenElement||document.webkitFullscreenElement;
+function syncFs(){
+  const fixed=stage.classList.contains('is-fixed'),on=!!fsEl()||fixed;
+  stage.classList.toggle('is-full',on);fsBtn.setAttribute('aria-pressed',on);
+  fsBtn.textContent=on?'Salir de pantalla completa':'Pantalla completa';
+  document.body.style.overflow=fixed?'hidden':'';
+}
+function fallbackFs(){stage.classList.add('is-fixed');syncFs();}
+fsBtn.onclick=()=>{
+  if(fsEl()){(document.exitFullscreen||document.webkitExitFullscreen).call(document);return;}
+  if(stage.classList.contains('is-fixed')){stage.classList.remove('is-fixed');syncFs();return;}
+  const req=stage.requestFullscreen||stage.webkitRequestFullscreen;
+  if(!req){fallbackFs();return;}
+  try{const p=req.call(stage);if(p&&p.catch)p.catch(fallbackFs);}catch(e){fallbackFs();}
+};
+document.addEventListener('fullscreenchange',syncFs);document.addEventListener('webkitfullscreenchange',syncFs);
+addEventListener('keydown',e=>{if(e.key==='Escape'&&stage.classList.contains('is-fixed')){stage.classList.remove('is-fixed');syncFs();}});
+// "Ver en el modelo": la cámara viaja hasta el elemento y abre su tarjeta.
+let flight=null;
+controls.addEventListener('start',()=>{flight=null;});
+document.querySelectorAll('.control-buttons button').forEach(b=>b.addEventListener('click',()=>{flight=null;}));
+function focusTag(name){
+  const c=chips.find(c=>c.name===name);if(!c)return;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  stage.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+  let toT,toP;
+  if(name==='Cajón de Chincha'){toT=target.clone();toP=start.clone();}
+  else{
+    toT=c.at.clone();toT.y=Math.max(c.at.y-.15,.2);
+    const inside=Math.abs(c.at.x)<1.5&&c.at.z>-1.2&&c.at.z<1.3&&c.at.y>.2&&c.at.y<3.9;
+    if(inside)toP=new THREE.Vector3(toT.x*.4+.6,toT.y+.9,4.6);
+    else{toP=start.clone().sub(toT).setLength(7).add(toT);toP.y=Math.max(toP.y,1.6);}
+  }
+  flight={t0:performance.now(),dur:reduce?1:1000,fp:camera.position.clone(),ft:controls.target.clone(),tp:toP,tt:toT};
+  showCard(name);
+}
+document.querySelectorAll('[data-tag]').forEach(b=>b.addEventListener('click',()=>focusTag(b.dataset.tag)));
+function animate(){requestAnimationFrame(animate);if(flight){const k=Math.min((performance.now()-flight.t0)/flight.dur,1),q=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;camera.position.lerpVectors(flight.fp,flight.tp,q);controls.target.lerpVectors(flight.ft,flight.tt,q);if(k>=1)flight=null;}controls.update();renderer.render(scene,camera);if(showLabels){frame++;updateLabels(frame%8===1);}}animate();
+</script></body></html>
